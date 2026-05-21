@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sebuah Kejutan untuk Mutiara</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --maroon: #590D22;
+            --dark-red: #800000;
+            --pink-pastel: #FFB7B2;
+            --cream: #FFF5E4;
+            --text: #4A0404;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--maroon);
+        }
+
+        /* --- 1. Intro Section (The Gift Box) --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--maroon);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
+
+        .gift-box {
+            font-size: 80px;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            color: var(--pink-pastel);
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+            user-select: none;
+        }
+
+        .intro-text {
+            color: var(--cream);
+            margin-top: 20px;
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: fadeIn 2s 1s forwards;
+        }
+
+        /* --- 2. Main Layout --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: var(--dark-red);
+        }
+
+        /* --- 3. Cards & Sections --- */
+        section {
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(89, 13, 34, 0.1);
+            border: 1px solid var(--pink-pastel);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--maroon);
+        }
+
+        .chapter-title {
+            display: inline-block;
+            background: var(--pink-pastel);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--maroon);
+        }
+
+        /* --- Foto Styles --- */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-frame {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 3px solid var(--white);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-frame img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Single Photo Wide */
+        .photo-wide {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .photo-wide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- 4. Timeline Styles --- */
+        .timeline-item {
+            margin-left: 20px;
+            border-left: 2px dashed var(--maroon);
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--dark-red);
+            font-weight: bold;
+        }
+
+        /* List Styles */
+        ul.momen-list {
+            list-style: none;
+        }
+
+        ul.momen-list li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        ul.momen-list li::before {
+            content: '♥';
+            position: absolute;
+            left: 0;
+            color: var(--pink-pastel);
+        }
+
+        /* --- 5. Surprise Button --- */
+        .surprise-btn-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .secret-btn {
+            background: transparent;
+            border: 2px solid var(--maroon);
+            color: var(--maroon);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .secret-btn:hover {
+            background: var(--maroon);
+            color: var(--white);
+            box-shadow: 0 0 15px var(--dark-red);
+        }
+
+        /* The Hidden Modal */
+        #surprise-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(89, 13, 34, 0.98);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+            color: var(--cream);
+        }
+
+        #surprise-modal .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--cream);
+            background: none;
+            border: none;
+        }
+
+        #surprise-modal h2 {
+            color: var(--pink-pastel);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #surprise-modal p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--pink-pastel);
+            top: -10px;
+            z-index: 9000;
+            pointer-events: none;
+        }
+
+        /* --- Animations --- */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        @keyframes fadeIn {
+            to {opacity: 1;}
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECTION 1: INTERSTITIAL (Intro Gift Box) -->
+    <div id="intro-overlay">
+        <div class="gift-box" onclick="openMainPage()">🎁</div>
+        <p class="intro-text" id="intro-message">Kado Untuk Pacarku...</p>
+    </div>
+
+    <div class="container">
+          
+        <!-- Header Title -->
+        <header>
+            <p>Selamat Ulang Tahun Pacarku!</p>
+            <h1>Mutiara Mayfridana Alifa</h1>
+            <p>Ulang Tahun yang ke - 25 Tahun.</p>
+        </header>
+
+        <!-- SECTION 2: Chapter 1 -->
+        <section>
+            <span class="chapter-title">Pembukaan</span>
+            <div class="card">
+                <h2>Awal dari Semua</h2>
+                <p style="margin-top: 15px;">
+                    Aku tahu ini mungkin aneh, membuat website ginian. Tapi aku pikir, untuk orang yang special berhak mendapat cara yang special juga untuk disampaikan.
+                    <br><br>
+                    Selama beberapa bulan ini, banyak hal yang berubah dari aku. Tapi kadang beberapa hal kita berdua berantem karna aku egonya masih tinggi, masih banyak ngeluhnya dan kadang gak memikirkan perasaan kamu. namun, Thank you sudah bertahan sama aku, ya.
+                </p>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">Awalnya</div>
+                <p>Kita saling kenal karena dikenalin sahabat kita, kita berdua saling cerita, dan aku mulai realize kalau ada yang berbeda dari kamu, makanya aku mulai intens mendekati kamu.</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Sekarang</div>
+                <p>Setelah beberapabulan telah kita lewati. Penuh warna, tawa, dan kadang juga panas dingin, tapi itu yang membuat ternyata kamu orang yang sempurna buat temani aku nantinya.</p>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Chapter 2 - Momen -->
+        <section>
+            <span class="chapter-title">Beberapa Momen</span>
+            <div class="card">
+                <h2>Potongan Kecil yang Aku Rindukan</h2>
+                <p>Ingin aku ceritakan satu per satu, tapi yang paling aku rindukan biasanya yang sederhana:</p>
+                <br>
+                <ul class="momen-list">
+                    <li>Waktu pertama kali ke vida hp aku mati, hujan deras dan aku nggak hafal jalan.</li>
+                    <li>kita jalan pertama kali terus kamu panik karna tiket parkir.</li>
+                    <li>Kita pertama kali jalan ke rangkas.</li>
+                    <li>Dan segalanya tentangmu yang buat aku sayang.</li>
+                </ul>
+
+               <div class="photo-gallery">
+                    <div class="photo-frame">
+                        <img src="https://i.imgur.com/PcdjeUI.jpg" alt="Momen 1">
+                    </div>
+                    <div class="photo-frame">
+                        <img src="https://i.imgur.com/0I7PvYi.jpg" alt="Momen 2">
+                    </div>
+                    <div class="photo-frame">
+                        <img src="https://i.imgur.com/R2P5W6F.jpg" alt="Momen 3">
+                    </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Chapter 3 -->
+        <section>
+            <span class="chapter-title">Hal-Hal Khusus</span>
+            <div class="card">
+                <h2>Kenapa Aku Suka Sama Kamu?</h2>
+                <p>Jujur, ini harusnya rahasia, tapi sengaja aku tulis di sini:</p>
+                <br>
+                <ul class="momen-list">
+                    <li>Karena Kamu Selalu Yakin aku bisa jadi sesuai dengan aku impikan.</li>
+                    <li>Pemikiran Kamu Yang dewasa.</li>
+                    <li>Humor kamu yang sama kayak aku.</li>
+                    <li>You are just yourself. Honest and raw.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Surprise Trigger -->
+        <section>
+            <div class="surprise-btn-container">
+                <p style="margin-bottom: 15px; color: var(--maroon); font-style: italic;">Kalau kamu sudah baca semuanya...</p>
+                <button class="secret-btn" onclick="openSurprise()">Buka Kejutan Ini 📦</button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer style="text-align: center; padding: 40px; background: var(--maroon); color: var(--cream);">
+        <p style="font-size: 1.2rem; font-family: 'Playfair Display', serif;">Happy Birthday, Mutiara.</p>
+        <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.8;">Love, yang membuat website ini.</p>
+    </footer>
+
+    <!-- HIDDEN SURPRISE MODAL -->
+    <div id="surprise-modal">
+        <button class="close-btn" onclick="closeSurprise()">×</button>
+        <h2>💕 Surprise! 💕</h2>
+        <p>
+            Selamat ulang tahun yang ke-25 Sygkuu!<br><br>
+            Aku paham, aku kadang ribet, kita juga kadang panas dingin. Tapi yang pasti, aku sangat bersyukur kamu ada di hidup aku.<br><br>
+            Terima kasih sudah jadi kamu. Terima kasih sudah stay. Harapan aku: kita lanjut perjalanan ini bareng-bareng, Temani aku sampai aku sukses dan kita kejar mimpi yang selalu kita berdua idamkan okee<br><br>
+            Aku sayang kamu. Sekarang, aku harap kamu umur panjang, kamu sukses, dan kamu selalu saya sama aku.<br><br>
+            <strong>Happy Birthday Mutiara! 🎂</strong>
+        </p>
+    </div>
+
+    <script>
+        // --- Fungsi 1: Buka Halaman Utama (Klik Kadonya) ---
+        function openMainPage() {
+            const overlay = document.getElementById('intro-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 1000);
+        }
+
+        // --- Fungsi 2: Intersection Observer untuk Efek Scroll ---
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- Fungsi 3: Buka Surprise Modal ---
+        function openSurprise() {
+            const modal = document.getElementById('surprise-modal');
+            modal.style.display = 'flex';
+            startConfetti(); // Jalankan efek confetti
+        }
+
+        // --- Fungsi 4: Tutup Surprise Modal ---
+        function closeSurprise() {
+            const modal = document.getElementById('surprise-modal');
+            modal.style.display = 'none';
+        }
+    
+        // --- Fungsi 5: Efek Confetti Sederhana ---
+        function startConfetti() {
+            const colors = ['#FFB7B2', '#590D22', '#FF69B4', '#FFD700'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confetti.style.opacity = Math.random();
+                document.body.appendChild(confetti);
+
+                // Hapus setelah animasi selesai
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+        }
+    </script>
+</body>
+</html>
