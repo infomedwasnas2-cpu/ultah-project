@@ -418,13 +418,28 @@
 
     <script>
         // --- Fungsi 1: Buka Halaman Utama (Klik Kadonya) ---
-        function openMainPage() {
-            const overlay = document.getElementById('intro-overlay');
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 1000);
-        }
+       function openMainPage() {
+
+    document.getElementById(
+        "bgMusic"
+    ).play();
+
+    const overlay =
+    document.getElementById(
+        'intro-overlay'
+    );
+
+    overlay.style.opacity =
+    '0';
+
+    setTimeout(() => {
+
+        overlay.style.display =
+        'none';
+
+    }, 1000);
+
+}
 
         // --- Fungsi 2: Intersection Observer untuk Efek Scroll ---
         const sections = document.querySelectorAll('section');
@@ -475,25 +490,5 @@
 <audio id="bgMusic" loop>
     <source src="lagu_ultah.mp3" type="audio/mpeg">
 </audio>
-
-<button id="startBtn">
-    ❤️ Klik Sayang ❤️
-</button>
-
-<script>
-document.getElementById(
-"startBtn"
-).onclick = () => {
-
-document.getElementById(
-"bgMusic"
-).play();
-
-document.getElementById(
-"startBtn"
-).style.display="none";
-
-};
-</script>
 </body>
 </html>
