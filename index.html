@@ -472,5 +472,28 @@
             }
         }
     </script>
+<audio id="bgMusic" loop>
+    <source src="lagu_ultah.mp3" type="audio/mpeg">
+</audio>
+
+<button id="startBtn">
+    ❤️ Klik Sayang ❤️
+</button>
+
+<script>
+document.getElementById(
+"startBtn"
+).onclick = () => {
+
+document.getElementById(
+"bgMusic"
+).play();
+
+document.getElementById(
+"startBtn"
+).style.display="none";
+
+};
+</script>
 </body>
 </html>
